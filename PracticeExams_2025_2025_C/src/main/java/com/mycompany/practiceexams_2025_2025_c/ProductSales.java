@@ -1,10 +1,7 @@
 
 package com.mycompany.practiceexams_2025_2025_c;
 
-/**
- *
- * @author reaganrichards
- */
+
 public class ProductSales implements IProductSales {
     
     int [][] ProductSales = {
@@ -42,7 +39,7 @@ public class ProductSales implements IProductSales {
         
         for (int row = 0; row < ProductSales.length; row++)
         {
-            for (int col = 0; col < ProductSales[row].length; row++)
+            for (int col = 0; col < ProductSales[row].length; col++)
             {
                 if (ProductSales[row][col] > Max)
                 {
@@ -56,11 +53,11 @@ public class ProductSales implements IProductSales {
     @Override
     public int MinSale(int[][] productSales) {
         
-        int Min = 0;
+        int Min = ProductSales[0][0];
         
         for (int row = 0; row < ProductSales.length; row++)
         {
-            for (int col = 0; col < ProductSales[row].length; row++)
+            for (int col = 0; col < ProductSales[row].length; col++)
             {
                 if (ProductSales[row][col] < Min)
                 {
