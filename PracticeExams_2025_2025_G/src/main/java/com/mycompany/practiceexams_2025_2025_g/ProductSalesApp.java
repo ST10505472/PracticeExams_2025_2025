@@ -4,11 +4,14 @@
  */
 package com.mycompany.practiceexams_2025_2025_g;
 
-/**
- *
- * @author reaganrichards
- */
+import javax.swing.JOptionPane;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+
 public class ProductSalesApp extends javax.swing.JFrame {
+    private final ProductSales sales = new ProductSales();
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProductSalesApp.class.getName());
 
@@ -34,18 +37,20 @@ public class ProductSalesApp extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        jMenu1_Exit = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2_LoadProductData = new javax.swing.JMenu();
-        jMenuItem2_SaveProductData = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem2_LoadProductData = new javax.swing.JMenuItem();
+        jMenuItem3_SaveProductData = new javax.swing.JMenuItem();
+        jMenuItem4_Clear = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1_LoadProductData.setText("Load Product Data");
+        jButton1_LoadProductData.addActionListener(this::jButton1_LoadProductDataActionPerformed);
 
         jButton2_SaveProductData.setText("Save Product Data");
+        jButton2_SaveProductData.addActionListener(this::jButton2_SaveProductDataActionPerformed);
 
         jLabel1_YearsProcessed.setText("Years Processed:");
 
@@ -53,23 +58,27 @@ public class ProductSalesApp extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jMenu1.setText("File");
+        jMenu1_Exit.setText("File");
 
-        jMenuItem1.setText("jMenuItem1");
-        jMenu1.add(jMenuItem1);
+        jMenuItem1.setText("Exit");
+        jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
+        jMenu1_Exit.add(jMenuItem1);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(jMenu1_Exit);
 
         jMenu2_LoadProductData.setText("Tools");
 
-        jMenuItem2_SaveProductData.setText("Load Product Data");
-        jMenu2_LoadProductData.add(jMenuItem2_SaveProductData);
+        jMenuItem2_LoadProductData.setText("Load Product Data");
+        jMenuItem2_LoadProductData.addActionListener(this::jMenuItem2_LoadProductDataActionPerformed);
+        jMenu2_LoadProductData.add(jMenuItem2_LoadProductData);
 
-        jMenuItem3.setText("Save Product Data");
-        jMenu2_LoadProductData.add(jMenuItem3);
+        jMenuItem3_SaveProductData.setText("Save Product Data");
+        jMenuItem3_SaveProductData.addActionListener(this::jMenuItem3_SaveProductDataActionPerformed);
+        jMenu2_LoadProductData.add(jMenuItem3_SaveProductData);
 
-        jMenuItem4.setText("jMenuItem4");
-        jMenu2_LoadProductData.add(jMenuItem4);
+        jMenuItem4_Clear.setText("Clear");
+        jMenuItem4_Clear.addActionListener(this::jMenuItem4_ClearActionPerformed);
+        jMenu2_LoadProductData.add(jMenuItem4_Clear);
 
         jMenuBar1.add(jMenu2_LoadProductData);
 
@@ -105,6 +114,84 @@ public class ProductSalesApp extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1_LoadProductDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1_LoadProductDataActionPerformed
+        loadData();
+    }//GEN-LAST:event_jButton1_LoadProductDataActionPerformed
+
+    private void jMenuItem2_LoadProductDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2_LoadProductDataActionPerformed
+        loadData();
+    }//GEN-LAST:event_jMenuItem2_LoadProductDataActionPerformed
+
+    private void jMenuItem3_SaveProductDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3_SaveProductDataActionPerformed
+        saveData();
+    }//GEN-LAST:event_jMenuItem3_SaveProductDataActionPerformed
+
+    private void jMenuItem4_ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4_ClearActionPerformed
+        clearData();
+    }//GEN-LAST:event_jMenuItem4_ClearActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        exit();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jButton2_SaveProductDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2_SaveProductDataActionPerformed
+        saveData();
+    }//GEN-LAST:event_jButton2_SaveProductDataActionPerformed
+        private void loadData()
+        {
+            int total = sales.GetTotalSales();
+            int over = sales.GetSalesOverLimit();
+            int under = sales.GetSalesUnderLimit();
+            double average = sales.GetAverageSales();
+            int years = sales.GetProductsProcessed();
+            
+            String report = "";
+            report += "Total Sales: " + total + "\n";
+            report += "Average Sales: " + average + "\n";
+            report += "Sales Over Limit: " + over + "\n";
+            report += "Sales Under Limit: " + under + "\n";
+            
+            jTextArea1.setText(report);
+            jLabel1_YearsProcessed.setText("Years Processed: " + years);
+            
+        }
+            
+        private void saveData()
+        {
+            try (FileWriter writer = new FileWriter ("data.txt"))
+            {
+                writer.write("DATA LOG \n");
+                writer.write("******************************\n");
+                writer.write(jTextArea1.getText());
+                writer.write("******************************\n");
+                JOptionPane.showMessageDialog(this, "Data Saved Successfully");
+            
+            }
+            catch(IOException e)
+            {
+                        
+                        JOptionPane.showMessageDialog(this, "Error Saving File" + e.getMessage());
+                        }
+                    
+                }
+        
+        private void clearData()
+        {
+            jTextArea1.setText("");
+            jLabel1_YearsProcessed.setText("");
+        }
+        
+        private void exit()
+        {
+        System.exit(0);
+        }
+            
+        
+            
+            
+            
+        
+        
     /**
      * @param args the command line arguments
      */
@@ -134,13 +221,13 @@ public class ProductSalesApp extends javax.swing.JFrame {
     private javax.swing.JButton jButton1_LoadProductData;
     private javax.swing.JButton jButton2_SaveProductData;
     private javax.swing.JLabel jLabel1_YearsProcessed;
-    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu1_Exit;
     private javax.swing.JMenu jMenu2_LoadProductData;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2_SaveProductData;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem2_LoadProductData;
+    private javax.swing.JMenuItem jMenuItem3_SaveProductData;
+    private javax.swing.JMenuItem jMenuItem4_Clear;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables

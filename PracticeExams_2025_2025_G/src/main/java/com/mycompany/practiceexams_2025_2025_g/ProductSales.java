@@ -46,6 +46,7 @@ public class ProductSales implements IProductSales {
             {
             
               if (sales[row][col] > SALES_LIMIT){
+                  over++;
              }
           }
         }
@@ -64,6 +65,7 @@ public class ProductSales implements IProductSales {
             {
             
               if (sales[row][col] < SALES_LIMIT){
+                  under++;
              }
           }
         }
